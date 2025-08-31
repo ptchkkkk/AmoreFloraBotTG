@@ -1,22 +1,19 @@
-# Базовий образ
 FROM python:3.10-slim
 
-# Встановлюємо системні залежності
+# Системні пакети
 RUN apt-get update && apt-get install -y \
-    build-essential \
     gcc \
-    libffi-dev \
     python3-dev \
+    libffi-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Робоча директорія
 WORKDIR /app
 
-# Копіюємо файли
+# Встановлюємо залежності
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Копіюємо код
 COPY . .
 
-# Запуск через Procfile (можна замінити на python bot.py)
 CMD ["python", "bot.py"]
